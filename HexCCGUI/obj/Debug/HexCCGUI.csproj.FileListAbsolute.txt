@@ -1,0 +1,11 @@
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Debug\HexCCGUI.exe.config
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Debug\HexCCGUI.exe
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Debug\HexCCGUI.pdb
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.csprojResolveAssemblyReference.cache
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.frmMainWindow.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.Properties.Resources.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.csproj.GenerateResource.Cache
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.pdb
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.frmAbout.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.frmSettings.resources
