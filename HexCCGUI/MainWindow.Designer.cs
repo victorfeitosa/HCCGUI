@@ -34,9 +34,13 @@
             this.btnOpenTextEditor = new System.Windows.Forms.Button();
             this.lblOutput = new System.Windows.Forms.Label();
             this.btnClearOutput = new System.Windows.Forms.Button();
-            this.txbCompileOutput = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decompileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compilerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutHCCGUIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -50,27 +54,22 @@
             this.chbRun = new System.Windows.Forms.CheckBox();
             this.chbPause = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnGameLoc = new System.Windows.Forms.Button();
             this.txbRunArguments = new System.Windows.Forms.TextBox();
             this.lblRunArguments = new System.Windows.Forms.Label();
             this.txbGameLoc = new System.Windows.Forms.TextBox();
             this.lblGameLoc = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chbMaintain = new System.Windows.Forms.CheckBox();
+            this.btnOutputLoc = new System.Windows.Forms.Button();
+            this.btnProjectSrc = new System.Windows.Forms.Button();
             this.txbProjectSrc = new System.Windows.Forms.TextBox();
             this.txbOutputLoc = new System.Windows.Forms.TextBox();
             this.lblProjectSrc = new System.Windows.Forms.Label();
             this.lblOutputLoc = new System.Windows.Forms.Label();
             this.btnDecompile = new System.Windows.Forms.Button();
-            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.picHexLogo = new System.Windows.Forms.PictureBox();
-            this.btnOutputLoc = new System.Windows.Forms.Button();
-            this.btnProjectSrc = new System.Windows.Forms.Button();
-            this.btnGameLoc = new System.Windows.Forms.Button();
-            this.compileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.decompileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compilerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txbCompileOutput = new System.Windows.Forms.RichTextBox();
             this.pnlOutput.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -94,10 +93,10 @@
             // pnlOutput
             // 
             this.pnlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlOutput.Controls.Add(this.txbCompileOutput);
             this.pnlOutput.Controls.Add(this.btnOpenTextEditor);
             this.pnlOutput.Controls.Add(this.lblOutput);
             this.pnlOutput.Controls.Add(this.btnClearOutput);
-            this.pnlOutput.Controls.Add(this.txbCompileOutput);
             this.pnlOutput.Location = new System.Drawing.Point(14, 374);
             this.pnlOutput.Name = "pnlOutput";
             this.pnlOutput.Size = new System.Drawing.Size(562, 238);
@@ -112,6 +111,7 @@
             this.btnOpenTextEditor.TabIndex = 27;
             this.btnOpenTextEditor.Text = "Open Text Editor";
             this.btnOpenTextEditor.UseVisualStyleBackColor = true;
+            this.btnOpenTextEditor.Click += new System.EventHandler(this.btnOpenTextEditor_Click);
             // 
             // lblOutput
             // 
@@ -132,16 +132,6 @@
             this.btnClearOutput.UseVisualStyleBackColor = true;
             this.btnClearOutput.Click += new System.EventHandler(this.btnClearOutput_Click);
             // 
-            // txbCompileOutput
-            // 
-            this.txbCompileOutput.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txbCompileOutput.Location = new System.Drawing.Point(3, 28);
-            this.txbCompileOutput.Multiline = true;
-            this.txbCompileOutput.Name = "txbCompileOutput";
-            this.txbCompileOutput.ReadOnly = true;
-            this.txbCompileOutput.Size = new System.Drawing.Size(554, 176);
-            this.txbCompileOutput.TabIndex = 7;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -155,6 +145,39 @@
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // projectToolStripMenuItem
+            // 
+            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.compileToolStripMenuItem,
+            this.decompileToolStripMenuItem,
+            this.toolStripSeparator1});
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.projectToolStripMenuItem.Text = "Project";
+            // 
+            // compileToolStripMenuItem
+            // 
+            this.compileToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.Compile_191;
+            this.compileToolStripMenuItem.Name = "compileToolStripMenuItem";
+            this.compileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F7)));
+            this.compileToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.compileToolStripMenuItem.Text = "Compile";
+            this.compileToolStripMenuItem.Click += new System.EventHandler(this.compileToolStripMenuItem_Click);
+            // 
+            // decompileToolStripMenuItem
+            // 
+            this.decompileToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.WireframeView;
+            this.decompileToolStripMenuItem.Name = "decompileToolStripMenuItem";
+            this.decompileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F8)));
+            this.decompileToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.decompileToolStripMenuItem.Text = "Decompile";
+            this.decompileToolStripMenuItem.Click += new System.EventHandler(this.decompileToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -162,6 +185,14 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // compilerSettingsToolStripMenuItem
+            // 
+            this.compilerSettingsToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.AdministerTestControllers_8573;
+            this.compilerSettingsToolStripMenuItem.Name = "compilerSettingsToolStripMenuItem";
+            this.compilerSettingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.compilerSettingsToolStripMenuItem.Text = "HCC Settings";
+            this.compilerSettingsToolStripMenuItem.Click += new System.EventHandler(this.compilerSettingsToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -307,12 +338,24 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Game Configuration";
             // 
+            // btnGameLoc
+            // 
+            this.btnGameLoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnGameLoc.Image = global::HexCCGUI.Properties.Resources.folder_Open_16xLG;
+            this.btnGameLoc.Location = new System.Drawing.Point(228, 41);
+            this.btnGameLoc.Name = "btnGameLoc";
+            this.btnGameLoc.Size = new System.Drawing.Size(33, 23);
+            this.btnGameLoc.TabIndex = 15;
+            this.btnGameLoc.UseVisualStyleBackColor = true;
+            this.btnGameLoc.Click += new System.EventHandler(this.btnGameLoc_Click);
+            // 
             // txbRunArguments
             // 
             this.txbRunArguments.Location = new System.Drawing.Point(13, 90);
             this.txbRunArguments.Name = "txbRunArguments";
             this.txbRunArguments.Size = new System.Drawing.Size(248, 20);
             this.txbRunArguments.TabIndex = 14;
+            this.txbRunArguments.Leave += new System.EventHandler(this.txbRunArguments_Leave);
             // 
             // lblRunArguments
             // 
@@ -329,6 +372,7 @@
             this.txbGameLoc.Name = "txbGameLoc";
             this.txbGameLoc.Size = new System.Drawing.Size(209, 20);
             this.txbGameLoc.TabIndex = 12;
+            this.txbGameLoc.Leave += new System.EventHandler(this.txbGameLoc_Leave);
             // 
             // lblGameLoc
             // 
@@ -367,19 +411,46 @@
             this.chbMaintain.UseVisualStyleBackColor = true;
             this.chbMaintain.CheckedChanged += new System.EventHandler(this.chbMaintain_CheckedChanged);
             // 
+            // btnOutputLoc
+            // 
+            this.btnOutputLoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnOutputLoc.Image = global::HexCCGUI.Properties.Resources.folder_Open_16xLG;
+            this.btnOutputLoc.Location = new System.Drawing.Point(232, 94);
+            this.btnOutputLoc.Name = "btnOutputLoc";
+            this.btnOutputLoc.Size = new System.Drawing.Size(33, 23);
+            this.btnOutputLoc.TabIndex = 19;
+            this.btnOutputLoc.UseVisualStyleBackColor = true;
+            this.btnOutputLoc.Click += new System.EventHandler(this.btnOutputLoc_Click);
+            // 
+            // btnProjectSrc
+            // 
+            this.btnProjectSrc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnProjectSrc.Image = global::HexCCGUI.Properties.Resources.folder_Open_16xLG;
+            this.btnProjectSrc.Location = new System.Drawing.Point(232, 47);
+            this.btnProjectSrc.Name = "btnProjectSrc";
+            this.btnProjectSrc.Size = new System.Drawing.Size(33, 23);
+            this.btnProjectSrc.TabIndex = 20;
+            this.btnProjectSrc.UseVisualStyleBackColor = true;
+            this.btnProjectSrc.Click += new System.EventHandler(this.btnProjectSrc_Click);
+            // 
             // txbProjectSrc
             // 
             this.txbProjectSrc.Location = new System.Drawing.Point(17, 49);
             this.txbProjectSrc.Name = "txbProjectSrc";
+            this.txbProjectSrc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txbProjectSrc.Size = new System.Drawing.Size(209, 20);
             this.txbProjectSrc.TabIndex = 22;
+            this.txbProjectSrc.Leave += new System.EventHandler(this.txbProjectSrc_Leave);
             // 
             // txbOutputLoc
             // 
+            this.txbOutputLoc.HideSelection = false;
             this.txbOutputLoc.Location = new System.Drawing.Point(17, 97);
             this.txbOutputLoc.Name = "txbOutputLoc";
+            this.txbOutputLoc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txbOutputLoc.Size = new System.Drawing.Size(209, 20);
             this.txbOutputLoc.TabIndex = 24;
+            this.txbOutputLoc.Leave += new System.EventHandler(this.txbOutputLoc_Leave);
             // 
             // lblProjectSrc
             // 
@@ -410,22 +481,6 @@
             this.btnDecompile.UseVisualStyleBackColor = true;
             this.btnDecompile.Click += new System.EventHandler(this.btnDecompile_Click);
             // 
-            // projectToolStripMenuItem
-            // 
-            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.compileToolStripMenuItem,
-            this.decompileToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.clearSettingsToolStripMenuItem});
-            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.projectToolStripMenuItem.Text = "Project";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(217, 6);
-            // 
             // picHexLogo
             // 
             this.picHexLogo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -438,73 +493,16 @@
             this.picHexLogo.TabIndex = 26;
             this.picHexLogo.TabStop = false;
             // 
-            // btnOutputLoc
+            // txbCompileOutput
             // 
-            this.btnOutputLoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnOutputLoc.Image = global::HexCCGUI.Properties.Resources.folder_Open_16xLG;
-            this.btnOutputLoc.Location = new System.Drawing.Point(232, 94);
-            this.btnOutputLoc.Name = "btnOutputLoc";
-            this.btnOutputLoc.Size = new System.Drawing.Size(33, 23);
-            this.btnOutputLoc.TabIndex = 19;
-            this.btnOutputLoc.UseVisualStyleBackColor = true;
-            this.btnOutputLoc.Click += new System.EventHandler(this.btnOutputLoc_Click);
-            // 
-            // btnProjectSrc
-            // 
-            this.btnProjectSrc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnProjectSrc.Image = global::HexCCGUI.Properties.Resources.folder_Open_16xLG;
-            this.btnProjectSrc.Location = new System.Drawing.Point(232, 47);
-            this.btnProjectSrc.Name = "btnProjectSrc";
-            this.btnProjectSrc.Size = new System.Drawing.Size(33, 23);
-            this.btnProjectSrc.TabIndex = 20;
-            this.btnProjectSrc.UseVisualStyleBackColor = true;
-            this.btnProjectSrc.Click += new System.EventHandler(this.btnProjectSrc_Click);
-            // 
-            // btnGameLoc
-            // 
-            this.btnGameLoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnGameLoc.Image = global::HexCCGUI.Properties.Resources.folder_Open_16xLG;
-            this.btnGameLoc.Location = new System.Drawing.Point(228, 41);
-            this.btnGameLoc.Name = "btnGameLoc";
-            this.btnGameLoc.Size = new System.Drawing.Size(33, 23);
-            this.btnGameLoc.TabIndex = 15;
-            this.btnGameLoc.UseVisualStyleBackColor = true;
-            this.btnGameLoc.Click += new System.EventHandler(this.btnGameLoc_Click);
-            // 
-            // compileToolStripMenuItem
-            // 
-            this.compileToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.Compile_191;
-            this.compileToolStripMenuItem.Name = "compileToolStripMenuItem";
-            this.compileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F7)));
-            this.compileToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.compileToolStripMenuItem.Text = "Compile";
-            this.compileToolStripMenuItem.Click += new System.EventHandler(this.compileToolStripMenuItem_Click);
-            // 
-            // decompileToolStripMenuItem
-            // 
-            this.decompileToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.WireframeView;
-            this.decompileToolStripMenuItem.Name = "decompileToolStripMenuItem";
-            this.decompileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F8)));
-            this.decompileToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.decompileToolStripMenuItem.Text = "Decompile";
-            this.decompileToolStripMenuItem.Click += new System.EventHandler(this.decompileToolStripMenuItem_Click);
-            // 
-            // clearSettingsToolStripMenuItem
-            // 
-            this.clearSettingsToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.Clearwindowcontent_6304;
-            this.clearSettingsToolStripMenuItem.Name = "clearSettingsToolStripMenuItem";
-            this.clearSettingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.C)));
-            this.clearSettingsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.clearSettingsToolStripMenuItem.Text = "Clear Settings";
-            // 
-            // compilerSettingsToolStripMenuItem
-            // 
-            this.compilerSettingsToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.AdministerTestControllers_8573;
-            this.compilerSettingsToolStripMenuItem.Name = "compilerSettingsToolStripMenuItem";
-            this.compilerSettingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.compilerSettingsToolStripMenuItem.Text = "HCC Settings";
-            this.compilerSettingsToolStripMenuItem.Click += new System.EventHandler(this.compilerSettingsToolStripMenuItem_Click);
+            this.txbCompileOutput.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.txbCompileOutput.Location = new System.Drawing.Point(3, 29);
+            this.txbCompileOutput.Name = "txbCompileOutput";
+            this.txbCompileOutput.ReadOnly = true;
+            this.txbCompileOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txbCompileOutput.Size = new System.Drawing.Size(554, 175);
+            this.txbCompileOutput.TabIndex = 28;
+            this.txbCompileOutput.Text = "";
             // 
             // frmMainWindow
             // 
@@ -522,15 +520,16 @@
             this.Controls.Add(this.pnlOutput);
             this.Controls.Add(this.btnCompile);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "frmMainWindow";
             this.Text = "HCC Compiling GUI";
+            this.Activated += new System.EventHandler(this.frmMainWindow_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMainWindow_FormClosing);
-            this.Load += new System.EventHandler(this.chbPause_CheckedChanged);
+            this.Load += new System.EventHandler(this.frmMainWindow_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMainWindow_KeyDown);
             this.pnlOutput.ResumeLayout(false);
             this.pnlOutput.PerformLayout();
@@ -555,7 +554,6 @@
         private System.Windows.Forms.Panel pnlOutput;
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.Button btnClearOutput;
-        private System.Windows.Forms.TextBox txbCompileOutput;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compilerSettingsToolStripMenuItem;
@@ -591,8 +589,8 @@
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decompileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.RichTextBox txbCompileOutput;
     }
 }
 

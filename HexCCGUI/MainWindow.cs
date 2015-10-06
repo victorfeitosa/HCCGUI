@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +14,12 @@ namespace HexCCGUI
 {
     public partial class frmMainWindow : Form
     {
-        private string HCClocation { get; set; }
-        private string HDbglocation { get; set; }
-        private string HCCArguments { get; set; }
+        private string HCCLocation { get; set; }
+        private string DCCLocation { get; set; }
+        private string TextEditorLocation { get; set; }
 
         private string GameLocation { get; set; }
+        private string RunArguments { get; set; }
         private string ProjectLocation { get; set; }
         private string OutputLocation { get; set; }
         private string CompilationOutput { get; set; }
@@ -70,7 +73,7 @@ namespace HexCCGUI
         {
             if (chbV6.Checked && chbV7.Checked)
             {
-                chbV7.Checked = false;
+                OutputV7 = chbV7.Checked = false;
             }
 
             OutputV6 = chbV6.Checked;
@@ -80,7 +83,7 @@ namespace HexCCGUI
         {
             if (chbV7.Checked && chbV6.Checked)
             {
-                chbV6.Checked = false;
+                OutputV6 = chbV6.Checked = false;
             }
 
             OutputV7 = chbV7.Checked;
@@ -95,12 +98,50 @@ namespace HexCCGUI
         {
             // TODO: Implement this
             //load values from config file
+            //string values--
+            HCCLocation = Properties.Settings.Default.HCCLocation;
+            DCCLocation = Properties.Settings.Default.DCCLocation;
+            TextEditorLocation = Properties.Settings.Default.TextEditorLocation;
+
+            txbGameLoc.Text = GameLocation = Properties.Settings.Default.GameLocation;
+            txbProjectSrc.Text = ProjectLocation = Properties.Settings.Default.ProjectLocation;
+            txbOutputLoc.Text = OutputLocation = Properties.Settings.Default.OutputLocation;
+            txbRunArguments.Text = RunArguments = Properties.Settings.Default.RunArguments;
+            //boolean values--
+            chbOI.Checked = OptimizeImmediates = Properties.Settings.Default.OptimizeImmediates;
+            chbON.Checked = OptimizeNametables = Properties.Settings.Default.OptimizeNametables;
+            chbOldHCC.Checked = OldHCC = Properties.Settings.Default.OldHCC;
+            chbFileInfo.Checked = OutputFileinfo = Properties.Settings.Default.OptimizeImmediates;
+            chbV6.Checked = OutputV6 = Properties.Settings.Default.OutputV6;
+            chbV7.Checked = OutputV7 = Properties.Settings.Default.OutputV7;
+
+            chbMaintain.Checked = MaintainOutput = Properties.Settings.Default.MaintainOutput;
+            chbRun.Checked = RunAfterCompile = Properties.Settings.Default.RunAfterCompile;
+            chbPause.Checked = PauseAfterCompile = Properties.Settings.Default.PauseAfterCompile;
         }
 
         private void frmMainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             // TODO: Implement this
             //save values to config file
+            Properties.Settings.Default.GameLocation = GameLocation;
+            Properties.Settings.Default.ProjectLocation = ProjectLocation;
+            Properties.Settings.Default.OutputLocation = OutputLocation;
+            Properties.Settings.Default.RunArguments = RunArguments;
+
+            //boolean values--
+            Properties.Settings.Default.OptimizeImmediates = OptimizeImmediates;
+            Properties.Settings.Default.OptimizeNametables = OptimizeNametables;
+            Properties.Settings.Default.OldHCC = OldHCC;
+            Properties.Settings.Default.FileInfo = OutputFileinfo;
+            Properties.Settings.Default.OutputV6 = OutputV6;
+            Properties.Settings.Default.OutputV7 = OutputV7;
+
+            Properties.Settings.Default.MaintainOutput = MaintainOutput;
+            Properties.Settings.Default.RunAfterCompile = RunAfterCompile;
+            Properties.Settings.Default.PauseAfterCompile = PauseAfterCompile;
+
+            Properties.Settings.Default.Save();
         }
 
         private void frmMainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -116,7 +157,7 @@ namespace HexCCGUI
         {
             // TODO: Implement this
             //Compile code
-            showDbg();
+            showDbg();            
         }
 
         private void btnDecompile_Click(object sender, EventArgs e)
@@ -172,12 +213,13 @@ namespace HexCCGUI
             try
             {
                 outputfold.ShowDialog();
-                if (outputfold.SelectedPath != "")
+                if (new DirectoryInfo(txbOutputLoc.Text).Exists)
                     OutputLocation = txbOutputLoc.Text = outputfold.SelectedPath;
             }
             catch (Exception excep)
             {
                 Console.Out.WriteLine(excep.ToString());
+                MessageBox.Show("Invalid Path for the Output Location", "You are stupid", MessageBoxButtons.OKCancel);
             }
 
             Utils.scrollToEnd(txbOutputLoc);
@@ -192,24 +234,33 @@ namespace HexCCGUI
         private void showDbg()
         {
             string dbgText = "";
-            dbgText += "Game Location: " + GameLocation + "\r\n";
-            dbgText += "Project Location: " + ProjectLocation + "\r\n";
-            dbgText += "Output Location: " + OutputLocation + "\r\n";
-            dbgText += "Optional arguments: " + txbRunArguments.Text + "\r\n";
+            dbgText += "Compiler Settings===============================\r\n";
+            dbgText += "    HCC Location: " + HCCLocation + "\r\n";
+            dbgText += "    DCC Location: " + DCCLocation + "\r\n";
+            dbgText += "    Text Editor Location: " + TextEditorLocation + "\r\n\r\n";
 
-            dbgText += "Optimize Immediates: " + OptimizeImmediates + "\r\n";
-            dbgText += "Optimize Nametables: " + OptimizeNametables + "\r\n";
-            dbgText += "OldHCC: " + OldHCC + "\r\n";
-            dbgText += "Output FileInfo: " + OutputFileinfo + "\r\n";
-            dbgText += "Output V6: " + OutputV6 + "\r\n";
-            dbgText += "Output V7: " + OutputV7 + "\r\n";
+            dbgText += "Project Settings================================\r\n";
+            dbgText += "    Game Location: " + GameLocation + "\r\n";
+            dbgText += "    Project Location: " + ProjectLocation + "\r\n";
+            dbgText += "    Output Location: " + OutputLocation + "\r\n";
+            dbgText += "    Optional arguments: " + txbRunArguments.Text + "\r\n\r\n";
 
-            dbgText += "Pause after compilation: " + PauseAfterCompile + "\r\n";
-            dbgText += "Run after compilation: " + RunAfterCompile + "\r\n";
+            dbgText += "Compilation Settings============================\r\n";
+            dbgText += "    Optimize Immediates: " + OptimizeImmediates + "\r\n";
+            dbgText += "    Optimize Nametables: " + OptimizeNametables + "\r\n";
+            dbgText += "    OldHCC: " + OldHCC + "\r\n";
+            dbgText += "    Output FileInfo: " + OutputFileinfo + "\r\n";
+            dbgText += "    Output V6: " + OutputV6 + "\r\n";
+            dbgText += "    Output V7: " + OutputV7 + "\r\n\r\n";
+
+            dbgText += "Run Settings====================================\r\n";
+            dbgText += "    Pause after compilation: " + PauseAfterCompile + "\r\n";
+            dbgText += "    Run after compilation: " + RunAfterCompile + "\r\n";
 
 
             txbCompileOutput.Text = dbgText;
             Utils.scrollToEnd(txbCompileOutput);
+            txbCompileOutput.ScrollToCaret();
         }
 
         private void compilerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -231,6 +282,69 @@ namespace HexCCGUI
         private void decompileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnDecompile_Click(sender, e);
+        }
+
+        private void txbRunArguments_Leave(object sender, EventArgs e)
+        {
+            RunArguments = txbRunArguments.Text;
+        }
+
+        private void frmMainWindow_Activated(object sender, EventArgs e)
+        {
+            HCCLocation = Properties.Settings.Default.HCCLocation;
+            DCCLocation = Properties.Settings.Default.DCCLocation;
+            TextEditorLocation = Properties.Settings.Default.TextEditorLocation;
+        }
+
+        private void btnOpenTextEditor_Click(object sender, EventArgs e)
+        {
+            Process textEditor = new Process();
+            textEditor.StartInfo.FileName = TextEditorLocation;
+            textEditor.StartInfo.Arguments = System.IO.Path.GetDirectoryName(ProjectLocation);
+            textEditor.StartInfo.UseShellExecute = false;
+
+            textEditor.Start();
+            
+            //textEditor.WaitForExit();
+        }
+
+        private void txbOutputLoc_Leave(object sender, EventArgs e)
+        {
+            if(Utils.checkValidDirectoryPath(txbOutputLoc.Text))
+            {
+                OutputLocation = txbOutputLoc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbOutputLoc.Text + " is an invalid location!", "Invalid Path", MessageBoxButtons.OK);
+                txbOutputLoc.Text = OutputLocation;
+            }
+        }
+
+        private void txbProjectSrc_Leave(object sender, EventArgs e)
+        {
+            if (Utils.checkValidFilePath(txbProjectSrc.Text))
+            {
+                ProjectLocation = txbProjectSrc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbOutputLoc.Text + " is an invalid src file!", "Invalid SRC", MessageBoxButtons.OK);
+                txbProjectSrc.Text = ProjectLocation;
+            }
+        }
+
+        private void txbGameLoc_Leave(object sender, EventArgs e)
+        {
+            if (Utils.checkValidFilePath(txbGameLoc.Text))
+            {
+                GameLocation = txbGameLoc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbGameLoc.Text + " is an invalid Hexen II engine!", "Invalid HII Path", MessageBoxButtons.OK);
+                txbGameLoc.Text = GameLocation;
+            }
         }
     }
 }
