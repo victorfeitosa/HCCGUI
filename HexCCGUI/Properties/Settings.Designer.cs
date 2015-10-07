@@ -193,18 +193,6 @@ namespace HexCCGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PauseAfterCompile {
-            get {
-                return ((bool)(this["PauseAfterCompile"]));
-            }
-            set {
-                this["PauseAfterCompile"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string TextEditorLocation {
             get {

@@ -9,3 +9,7 @@ C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe
 C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.pdb
 C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.frmAbout.resources
 C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.frmSettings.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Debug\HexCCGUI.exe.manifest
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Debug\HexCCGUI.application
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe.manifest
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.application

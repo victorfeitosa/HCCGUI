@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainWindow));
             this.btnCompile = new System.Windows.Forms.Button();
             this.pnlOutput = new System.Windows.Forms.Panel();
+            this.txbCompileOutput = new System.Windows.Forms.RichTextBox();
             this.btnOpenTextEditor = new System.Windows.Forms.Button();
             this.lblOutput = new System.Windows.Forms.Label();
             this.btnClearOutput = new System.Windows.Forms.Button();
@@ -50,9 +51,7 @@
             this.chbOldHCC = new System.Windows.Forms.CheckBox();
             this.chbON = new System.Windows.Forms.CheckBox();
             this.chbOI = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chbRun = new System.Windows.Forms.CheckBox();
-            this.chbPause = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnGameLoc = new System.Windows.Forms.Button();
             this.txbRunArguments = new System.Windows.Forms.TextBox();
@@ -61,19 +60,17 @@
             this.lblGameLoc = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chbMaintain = new System.Windows.Forms.CheckBox();
+            this.btnDecompile = new System.Windows.Forms.Button();
             this.btnOutputLoc = new System.Windows.Forms.Button();
             this.btnProjectSrc = new System.Windows.Forms.Button();
             this.txbProjectSrc = new System.Windows.Forms.TextBox();
             this.txbOutputLoc = new System.Windows.Forms.TextBox();
             this.lblProjectSrc = new System.Windows.Forms.Label();
             this.lblOutputLoc = new System.Windows.Forms.Label();
-            this.btnDecompile = new System.Windows.Forms.Button();
             this.picHexLogo = new System.Windows.Forms.PictureBox();
-            this.txbCompileOutput = new System.Windows.Forms.RichTextBox();
             this.pnlOutput.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picHexLogo)).BeginInit();
@@ -82,7 +79,7 @@
             // btnCompile
             // 
             this.btnCompile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.3F);
-            this.btnCompile.Location = new System.Drawing.Point(470, 317);
+            this.btnCompile.Location = new System.Drawing.Point(166, 221);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(106, 51);
             this.btnCompile.TabIndex = 7;
@@ -101,6 +98,17 @@
             this.pnlOutput.Name = "pnlOutput";
             this.pnlOutput.Size = new System.Drawing.Size(562, 238);
             this.pnlOutput.TabIndex = 12;
+            // 
+            // txbCompileOutput
+            // 
+            this.txbCompileOutput.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.txbCompileOutput.Location = new System.Drawing.Point(3, 29);
+            this.txbCompileOutput.Name = "txbCompileOutput";
+            this.txbCompileOutput.ReadOnly = true;
+            this.txbCompileOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txbCompileOutput.Size = new System.Drawing.Size(554, 175);
+            this.txbCompileOutput.TabIndex = 28;
+            this.txbCompileOutput.Text = "";
             // 
             // btnOpenTextEditor
             // 
@@ -190,7 +198,7 @@
             // 
             this.compilerSettingsToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.AdministerTestControllers_8573;
             this.compilerSettingsToolStripMenuItem.Name = "compilerSettingsToolStripMenuItem";
-            this.compilerSettingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.compilerSettingsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.compilerSettingsToolStripMenuItem.Text = "HCC Settings";
             this.compilerSettingsToolStripMenuItem.Click += new System.EventHandler(this.compilerSettingsToolStripMenuItem_Click);
             // 
@@ -206,7 +214,7 @@
             // 
             this.aboutHCCGUIToolStripMenuItem.Image = global::HexCCGUI.Properties.Resources.InfoTooltip_16x;
             this.aboutHCCGUIToolStripMenuItem.Name = "aboutHCCGUIToolStripMenuItem";
-            this.aboutHCCGUIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutHCCGUIToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutHCCGUIToolStripMenuItem.Text = "About";
             this.aboutHCCGUIToolStripMenuItem.Click += new System.EventHandler(this.aboutHCCGUIToolStripMenuItem_Click);
             // 
@@ -291,38 +299,16 @@
             this.chbOI.UseVisualStyleBackColor = true;
             this.chbOI.CheckedChanged += new System.EventHandler(this.chbOI_CheckedChanged);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.chbRun);
-            this.groupBox2.Controls.Add(this.chbPause);
-            this.groupBox2.Location = new System.Drawing.Point(298, 218);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(278, 93);
-            this.groupBox2.TabIndex = 17;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Post-compilation Options";
-            // 
             // chbRun
             // 
             this.chbRun.AutoSize = true;
-            this.chbRun.Location = new System.Drawing.Point(18, 62);
+            this.chbRun.Location = new System.Drawing.Point(17, 148);
             this.chbRun.Name = "chbRun";
             this.chbRun.Size = new System.Drawing.Size(89, 17);
             this.chbRun.TabIndex = 15;
             this.chbRun.Text = "Run Hexen II";
             this.chbRun.UseVisualStyleBackColor = true;
             this.chbRun.CheckedChanged += new System.EventHandler(this.chbRun_CheckedChanged);
-            // 
-            // chbPause
-            // 
-            this.chbPause.AutoSize = true;
-            this.chbPause.Location = new System.Drawing.Point(18, 37);
-            this.chbPause.Name = "chbPause";
-            this.chbPause.Size = new System.Drawing.Size(129, 17);
-            this.chbPause.TabIndex = 14;
-            this.chbPause.Text = "Pause After Compiling";
-            this.chbPause.UseVisualStyleBackColor = true;
-            this.chbPause.CheckedChanged += new System.EventHandler(this.chbPause_CheckedChanged);
             // 
             // groupBox3
             // 
@@ -355,6 +341,7 @@
             this.txbRunArguments.Name = "txbRunArguments";
             this.txbRunArguments.Size = new System.Drawing.Size(248, 20);
             this.txbRunArguments.TabIndex = 14;
+            this.txbRunArguments.TextChanged += new System.EventHandler(this.txbRunArguments_Leave);
             this.txbRunArguments.Leave += new System.EventHandler(this.txbRunArguments_Leave);
             // 
             // lblRunArguments
@@ -372,6 +359,7 @@
             this.txbGameLoc.Name = "txbGameLoc";
             this.txbGameLoc.Size = new System.Drawing.Size(209, 20);
             this.txbGameLoc.TabIndex = 12;
+            this.txbGameLoc.TextChanged += new System.EventHandler(this.txbGameLoc_Leave);
             this.txbGameLoc.Leave += new System.EventHandler(this.txbGameLoc_Leave);
             // 
             // lblGameLoc
@@ -385,17 +373,20 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.chbRun);
             this.groupBox4.Controls.Add(this.chbMaintain);
+            this.groupBox4.Controls.Add(this.btnDecompile);
             this.groupBox4.Controls.Add(this.btnOutputLoc);
             this.groupBox4.Controls.Add(this.btnProjectSrc);
             this.groupBox4.Controls.Add(this.txbProjectSrc);
             this.groupBox4.Controls.Add(this.txbOutputLoc);
             this.groupBox4.Controls.Add(this.lblProjectSrc);
             this.groupBox4.Controls.Add(this.lblOutputLoc);
+            this.groupBox4.Controls.Add(this.btnCompile);
             this.groupBox4.Location = new System.Drawing.Point(298, 39);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.groupBox4.Size = new System.Drawing.Size(278, 173);
+            this.groupBox4.Size = new System.Drawing.Size(278, 329);
             this.groupBox4.TabIndex = 20;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Project Settings";
@@ -403,6 +394,7 @@
             // chbMaintain
             // 
             this.chbMaintain.AutoSize = true;
+            this.chbMaintain.Enabled = false;
             this.chbMaintain.Location = new System.Drawing.Point(17, 123);
             this.chbMaintain.Name = "chbMaintain";
             this.chbMaintain.Size = new System.Drawing.Size(187, 17);
@@ -410,6 +402,18 @@
             this.chbMaintain.Text = "Maintain Output Files in Src Folder";
             this.chbMaintain.UseVisualStyleBackColor = true;
             this.chbMaintain.CheckedChanged += new System.EventHandler(this.chbMaintain_CheckedChanged);
+            // 
+            // btnDecompile
+            // 
+            this.btnDecompile.Enabled = false;
+            this.btnDecompile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.3F);
+            this.btnDecompile.Location = new System.Drawing.Point(182, 284);
+            this.btnDecompile.Name = "btnDecompile";
+            this.btnDecompile.Size = new System.Drawing.Size(83, 39);
+            this.btnDecompile.TabIndex = 27;
+            this.btnDecompile.Text = "Decompile";
+            this.btnDecompile.UseVisualStyleBackColor = true;
+            this.btnDecompile.Click += new System.EventHandler(this.btnDecompile_Click);
             // 
             // btnOutputLoc
             // 
@@ -440,6 +444,7 @@
             this.txbProjectSrc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txbProjectSrc.Size = new System.Drawing.Size(209, 20);
             this.txbProjectSrc.TabIndex = 22;
+            this.txbProjectSrc.TextChanged += new System.EventHandler(this.txbProjectSrc_Leave);
             this.txbProjectSrc.Leave += new System.EventHandler(this.txbProjectSrc_Leave);
             // 
             // txbOutputLoc
@@ -450,7 +455,7 @@
             this.txbOutputLoc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txbOutputLoc.Size = new System.Drawing.Size(209, 20);
             this.txbOutputLoc.TabIndex = 24;
-            this.txbOutputLoc.Leave += new System.EventHandler(this.txbOutputLoc_Leave);
+            this.txbOutputLoc.TextChanged += new System.EventHandler(this.txbOutputLoc_Leave);
             // 
             // lblProjectSrc
             // 
@@ -470,17 +475,6 @@
             this.lblOutputLoc.TabIndex = 23;
             this.lblOutputLoc.Text = "Output Location";
             // 
-            // btnDecompile
-            // 
-            this.btnDecompile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.3F);
-            this.btnDecompile.Location = new System.Drawing.Point(298, 323);
-            this.btnDecompile.Name = "btnDecompile";
-            this.btnDecompile.Size = new System.Drawing.Size(83, 39);
-            this.btnDecompile.TabIndex = 27;
-            this.btnDecompile.Text = "Decompile";
-            this.btnDecompile.UseVisualStyleBackColor = true;
-            this.btnDecompile.Click += new System.EventHandler(this.btnDecompile_Click);
-            // 
             // picHexLogo
             // 
             this.picHexLogo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -493,17 +487,6 @@
             this.picHexLogo.TabIndex = 26;
             this.picHexLogo.TabStop = false;
             // 
-            // txbCompileOutput
-            // 
-            this.txbCompileOutput.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txbCompileOutput.Location = new System.Drawing.Point(3, 29);
-            this.txbCompileOutput.Name = "txbCompileOutput";
-            this.txbCompileOutput.ReadOnly = true;
-            this.txbCompileOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txbCompileOutput.Size = new System.Drawing.Size(554, 175);
-            this.txbCompileOutput.TabIndex = 28;
-            this.txbCompileOutput.Text = "";
-            // 
             // frmMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -511,14 +494,11 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(588, 624);
-            this.Controls.Add(this.btnDecompile);
             this.Controls.Add(this.picHexLogo);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pnlOutput);
-            this.Controls.Add(this.btnCompile);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -537,8 +517,6 @@
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -566,9 +544,7 @@
         private System.Windows.Forms.CheckBox chbOldHCC;
         private System.Windows.Forms.CheckBox chbON;
         private System.Windows.Forms.CheckBox chbOI;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chbRun;
-        private System.Windows.Forms.CheckBox chbPause;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnGameLoc;
         private System.Windows.Forms.TextBox txbRunArguments;
@@ -576,10 +552,8 @@
         private System.Windows.Forms.TextBox txbGameLoc;
         private System.Windows.Forms.Label lblGameLoc;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckBox chbMaintain;
         private System.Windows.Forms.Button btnOutputLoc;
         private System.Windows.Forms.Button btnProjectSrc;
-        private System.Windows.Forms.TextBox txbProjectSrc;
         private System.Windows.Forms.TextBox txbOutputLoc;
         private System.Windows.Forms.Label lblProjectSrc;
         private System.Windows.Forms.Label lblOutputLoc;
@@ -591,6 +565,8 @@
         private System.Windows.Forms.ToolStripMenuItem decompileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.RichTextBox txbCompileOutput;
+        private System.Windows.Forms.CheckBox chbMaintain;
+        private System.Windows.Forms.TextBox txbProjectSrc;
     }
 }
 

@@ -1,0 +1,15 @@
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Release\HexCCGUI.exe.config
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.frmAbout.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.frmMainWindow.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.Properties.Resources.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.frmSettings.resources
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.csproj.GenerateResource.Cache
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.exe
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.pdb
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Release\HexCCGUI.exe.manifest
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Release\HexCCGUI.application
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Release\HexCCGUI.exe
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Release\HexCCGUI.pdb
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.exe.manifest
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.application
+C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Release\HexCCGUI.csprojResolveAssemblyReference.cache

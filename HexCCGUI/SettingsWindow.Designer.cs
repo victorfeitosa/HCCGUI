@@ -101,6 +101,7 @@
             this.txbTextEditorLoc.Name = "txbTextEditorLoc";
             this.txbTextEditorLoc.Size = new System.Drawing.Size(237, 20);
             this.txbTextEditorLoc.TabIndex = 7;
+            this.txbTextEditorLoc.TextChanged += new System.EventHandler(this.txbTextEditorLoc_Leave);
             this.txbTextEditorLoc.Leave += new System.EventHandler(this.txbTextEditorLoc_Leave);
             // 
             // lblTExtEditor
@@ -129,6 +130,7 @@
             this.txbDCCLoc.Name = "txbDCCLoc";
             this.txbDCCLoc.Size = new System.Drawing.Size(237, 20);
             this.txbDCCLoc.TabIndex = 4;
+            this.txbDCCLoc.TextChanged += new System.EventHandler(this.txbDCCLoc_Leave);
             this.txbDCCLoc.Leave += new System.EventHandler(this.txbDCCLoc_Leave);
             // 
             // lblDccLoc
@@ -157,6 +159,7 @@
             this.txbHCCLoc.Name = "txbHCCLoc";
             this.txbHCCLoc.Size = new System.Drawing.Size(237, 20);
             this.txbHCCLoc.TabIndex = 1;
+            this.txbHCCLoc.TextChanged += new System.EventHandler(this.txbHCCLoc_Leave);
             this.txbHCCLoc.Leave += new System.EventHandler(this.txbHCCLoc_Leave);
             // 
             // lblHCCLoc

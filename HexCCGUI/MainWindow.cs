@@ -24,7 +24,6 @@ namespace HexCCGUI
         private string OutputLocation { get; set; }
         private string CompilationOutput { get; set; }
 
-        private bool PauseAfterCompile { get; set; }
         private bool RunAfterCompile { get; set; }
         private bool OptimizeImmediates { get; set; }
         private bool OptimizeNametables { get; set; }
@@ -37,11 +36,6 @@ namespace HexCCGUI
         public frmMainWindow()
         {
             InitializeComponent();
-        }
-
-        private void chbPause_CheckedChanged(object sender, EventArgs e)
-        {
-            PauseAfterCompile = chbPause.Checked;
         }
 
         private void chbRun_CheckedChanged(object sender, EventArgs e)
@@ -96,7 +90,6 @@ namespace HexCCGUI
 
         private void frmMainWindow_Load(object sender, EventArgs e)
         {
-            // TODO: Implement this
             //load values from config file
             //string values--
             HCCLocation = Properties.Settings.Default.HCCLocation;
@@ -117,12 +110,10 @@ namespace HexCCGUI
 
             chbMaintain.Checked = MaintainOutput = Properties.Settings.Default.MaintainOutput;
             chbRun.Checked = RunAfterCompile = Properties.Settings.Default.RunAfterCompile;
-            chbPause.Checked = PauseAfterCompile = Properties.Settings.Default.PauseAfterCompile;
         }
 
         private void frmMainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // TODO: Implement this
             //save values to config file
             Properties.Settings.Default.GameLocation = GameLocation;
             Properties.Settings.Default.ProjectLocation = ProjectLocation;
@@ -138,8 +129,7 @@ namespace HexCCGUI
             Properties.Settings.Default.OutputV7 = OutputV7;
 
             Properties.Settings.Default.MaintainOutput = MaintainOutput;
-            Properties.Settings.Default.RunAfterCompile = RunAfterCompile;
-            Properties.Settings.Default.PauseAfterCompile = PauseAfterCompile;
+            Properties.Settings.Default.RunAfterCompile = RunAfterCompile;            
 
             Properties.Settings.Default.Save();
         }
@@ -155,9 +145,74 @@ namespace HexCCGUI
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            // TODO: Implement this
+            txbCompileOutput.Text = "";
+
             //Compile code
-            showDbg();            
+            Process compiler = new Process();
+            compiler.StartInfo.FileName = HCCLocation;
+            compiler.StartInfo.UseShellExecute = false;
+            compiler.StartInfo.CreateNoWindow = true;
+            compiler.StartInfo.RedirectStandardOutput = true;
+
+            //sets compiler arguments
+            compiler.StartInfo.Arguments = "-src " + Path.GetDirectoryName(ProjectLocation) + " -name " + Path.GetFileName(ProjectLocation);
+            if (OptimizeImmediates)
+                compiler.StartInfo.Arguments += " -oi";
+            if (OptimizeNametables)
+                compiler.StartInfo.Arguments += " -on";
+            if (OldHCC)
+                compiler.StartInfo.Arguments += " -old";
+            if (OutputFileinfo)
+                compiler.StartInfo.Arguments += " -fileinfo";
+            if (OutputV6)
+                compiler.StartInfo.Arguments += " -v6";
+            if (OutputV7)
+                compiler.StartInfo.Arguments += " -v7";
+
+            //starts compilation process
+            Console.WriteLine(compiler.StartInfo.Arguments);
+            compiler.Start();
+
+            try
+            {
+                txbCompileOutput.Text = compiler.StandardOutput.ReadToEnd();
+            }
+            catch (System.InvalidOperationException exc)
+            {
+                Console.WriteLine(exc.ToString());
+            }
+            compiler.WaitForExit();
+            Utils.scrollToEnd(txbCompileOutput);
+
+            //Copy output to output folder and open Hexen II if compilation was successful
+            if(compiler.ExitCode == 0 && RunAfterCompile)
+            {
+                string compiledFile, outputFile;
+                compiledFile = Path.GetDirectoryName(ProjectLocation) + "\\progs.dat";
+                outputFile = OutputLocation + "\\progs.dat";
+                try
+                {
+                    File.Copy(compiledFile, outputFile, true);
+                }
+                catch(Exception exc)
+                {
+                    Console.WriteLine(exc.ToString());
+                }
+
+                if(File.Exists(outputFile))
+                {
+                    System.Threading.Thread.Sleep(1000);
+
+                    //Run HEXEN II
+                    Process hexen = new Process();
+                    hexen.StartInfo.FileName = GameLocation;
+                    hexen.StartInfo.WorkingDirectory = Path.GetDirectoryName(GameLocation);
+                    hexen.StartInfo.Arguments = "-game " + Path.GetFileName(OutputLocation) + " ";
+                    hexen.StartInfo.Arguments += RunArguments;
+                    Console.WriteLine(hexen.StartInfo.Arguments);
+                    hexen.Start();
+                }
+            }
         }
 
         private void btnDecompile_Click(object sender, EventArgs e)
@@ -213,13 +268,13 @@ namespace HexCCGUI
             try
             {
                 outputfold.ShowDialog();
-                if (new DirectoryInfo(txbOutputLoc.Text).Exists)
+                if (new DirectoryInfo(outputfold.SelectedPath).Exists)
                     OutputLocation = txbOutputLoc.Text = outputfold.SelectedPath;
             }
             catch (Exception excep)
             {
                 Console.Out.WriteLine(excep.ToString());
-                MessageBox.Show("Invalid Path for the Output Location", "You are stupid", MessageBoxButtons.OKCancel);
+                MessageBox.Show(outputfold.SelectedPath + " is an invalid Output Path", "You are stupid", MessageBoxButtons.OK);
             }
 
             Utils.scrollToEnd(txbOutputLoc);
@@ -254,7 +309,6 @@ namespace HexCCGUI
             dbgText += "    Output V7: " + OutputV7 + "\r\n\r\n";
 
             dbgText += "Run Settings====================================\r\n";
-            dbgText += "    Pause after compilation: " + PauseAfterCompile + "\r\n";
             dbgText += "    Run after compilation: " + RunAfterCompile + "\r\n";
 
 
@@ -300,17 +354,17 @@ namespace HexCCGUI
         {
             Process textEditor = new Process();
             textEditor.StartInfo.FileName = TextEditorLocation;
-            textEditor.StartInfo.Arguments = System.IO.Path.GetDirectoryName(ProjectLocation);
+            textEditor.StartInfo.Arguments = Path.GetDirectoryName(ProjectLocation);
             textEditor.StartInfo.UseShellExecute = false;
 
             textEditor.Start();
-            
+
             //textEditor.WaitForExit();
         }
 
         private void txbOutputLoc_Leave(object sender, EventArgs e)
         {
-            if(Utils.checkValidDirectoryPath(txbOutputLoc.Text))
+            if (Utils.checkValidDirectoryPath(txbOutputLoc.Text))
             {
                 OutputLocation = txbOutputLoc.Text;
             }

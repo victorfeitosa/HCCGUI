@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HexCCGUI.exe" size="79872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HexCCGUI.exe" size="77824">
       <assemblyIdentity name="HexCCGUI" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>81dZgNgCPfPgmq8Ek4Y//MKgdaJocIcNVHpi/9GJzok=</dsig:DigestValue>
+        <dsig:DigestValue>SfiS4Ja3wMjyJlVDZGOvC2aBc707W1/ax7msKaKx4q4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
