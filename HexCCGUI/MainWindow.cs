@@ -396,7 +396,7 @@ namespace HexCCGUI
             }
             else
             {
-                MessageBox.Show(txbGameLoc.Text + " is an invalid Hexen II engine!", "Invalid HII Path", MessageBoxButtons.OK);
+                MessageBox.Show(txbGameLoc.Text + " is an invalid Hexen II engine!", "Invalid HexenII Path", MessageBoxButtons.OK);
                 txbGameLoc.Text = GameLocation;
             }
         }
