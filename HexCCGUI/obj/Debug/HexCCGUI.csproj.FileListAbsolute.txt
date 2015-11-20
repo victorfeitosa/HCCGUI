@@ -14,8 +14,6 @@ C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\bin\Debug\HexCCGUI.applicati
 C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe.manifest
 C:\VF\DEV\Workspaces\VisualStudio\HexCCGUI\HexCCGUI\obj\Debug\HexCCGUI.application
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Debug\HexCCGUI.exe.config
-C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe
-C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.pdb
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Debug\HexCCGUI.exe.manifest
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Debug\HexCCGUI.application
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Debug\HexCCGUI.exe
@@ -28,3 +26,5 @@ C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.frmSettings.resource
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.csproj.GenerateResource.Cache
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe.manifest
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.application
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.exe
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Debug\HexCCGUI.pdb
