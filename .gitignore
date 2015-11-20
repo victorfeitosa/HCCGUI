@@ -41,6 +41,13 @@ local.properties
 *.user
 *.sln.docstates
 
+*.vs
+*.sln
+*.csproj
+*.user
+*.pfx
+
+
 # Build results
 
 [Dd]ebug/
