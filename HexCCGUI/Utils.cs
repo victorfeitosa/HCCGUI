@@ -32,5 +32,10 @@ namespace HexCCGUI
             }
             return false;
         }
+
+        public static void foo()
+        {
+
+        }
     }
 }

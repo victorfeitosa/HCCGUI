@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HexCCGUI
@@ -33,11 +26,40 @@ namespace HexCCGUI
         private bool OutputV7 { get; set; }
         private bool MaintainOutput { get; set; }
 
+        #region Form Window Events
         public frmMainWindow()
         {
             InitializeComponent();
         }
 
+        private void frmMainWindow_Load(object sender, EventArgs e)
+        {
+            loadConfig();
+        }
+
+        private void frmMainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveConfig();
+        }
+
+        private void frmMainWindow_Activated(object sender, EventArgs e)
+        {
+            HCCLocation = Properties.Settings.Default.HCCLocation;
+            DCCLocation = Properties.Settings.Default.DCCLocation;
+            TextEditorLocation = Properties.Settings.Default.TextEditorLocation;
+        }
+
+        private void frmMainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F7)
+            {
+                compile();
+            }
+        }
+
+        #endregion
+
+        #region Form Element Events
         private void chbRun_CheckedChanged(object sender, EventArgs e)
         {
             RunAfterCompile = chbRun.Checked;
@@ -87,138 +109,16 @@ namespace HexCCGUI
         {
             MaintainOutput = chbMaintain.Checked;
         }
-
-        private void frmMainWindow_Load(object sender, EventArgs e)
-        {
-            //load values from config file
-            //string values--
-            HCCLocation = Properties.Settings.Default.HCCLocation;
-            DCCLocation = Properties.Settings.Default.DCCLocation;
-            TextEditorLocation = Properties.Settings.Default.TextEditorLocation;
-
-            txbGameLoc.Text = GameLocation = Properties.Settings.Default.GameLocation;
-            txbProjectSrc.Text = ProjectLocation = Properties.Settings.Default.ProjectLocation;
-            txbOutputLoc.Text = OutputLocation = Properties.Settings.Default.OutputLocation;
-            txbRunArguments.Text = RunArguments = Properties.Settings.Default.RunArguments;
-            //boolean values--
-            chbOI.Checked = OptimizeImmediates = Properties.Settings.Default.OptimizeImmediates;
-            chbON.Checked = OptimizeNametables = Properties.Settings.Default.OptimizeNametables;
-            chbOldHCC.Checked = OldHCC = Properties.Settings.Default.OldHCC;
-            chbFileInfo.Checked = OutputFileinfo = Properties.Settings.Default.OptimizeImmediates;
-            chbV6.Checked = OutputV6 = Properties.Settings.Default.OutputV6;
-            chbV7.Checked = OutputV7 = Properties.Settings.Default.OutputV7;
-
-            chbMaintain.Checked = MaintainOutput = Properties.Settings.Default.MaintainOutput;
-            chbRun.Checked = RunAfterCompile = Properties.Settings.Default.RunAfterCompile;
-        }
-
-        private void frmMainWindow_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //save values to config file
-            Properties.Settings.Default.GameLocation = GameLocation;
-            Properties.Settings.Default.ProjectLocation = ProjectLocation;
-            Properties.Settings.Default.OutputLocation = OutputLocation;
-            Properties.Settings.Default.RunArguments = RunArguments;
-
-            //boolean values--
-            Properties.Settings.Default.OptimizeImmediates = OptimizeImmediates;
-            Properties.Settings.Default.OptimizeNametables = OptimizeNametables;
-            Properties.Settings.Default.OldHCC = OldHCC;
-            Properties.Settings.Default.FileInfo = OutputFileinfo;
-            Properties.Settings.Default.OutputV6 = OutputV6;
-            Properties.Settings.Default.OutputV7 = OutputV7;
-
-            Properties.Settings.Default.MaintainOutput = MaintainOutput;
-            Properties.Settings.Default.RunAfterCompile = RunAfterCompile;            
-
-            Properties.Settings.Default.Save();
-        }
-
-        private void frmMainWindow_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.F7)
-            {
-                //Compile code
-                btnCompile_Click(sender, null);
-            }
-        }
+        #endregion
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            txbCompileOutput.Text = "";
-
-            //Compile code
-            Process compiler = new Process();
-            compiler.StartInfo.FileName = HCCLocation;
-            compiler.StartInfo.UseShellExecute = false;
-            compiler.StartInfo.CreateNoWindow = true;
-            compiler.StartInfo.RedirectStandardOutput = true;
-
-            //sets compiler arguments
-            compiler.StartInfo.Arguments = "-src " + Path.GetDirectoryName(ProjectLocation) + " -name " + Path.GetFileName(ProjectLocation);
-            if (OptimizeImmediates)
-                compiler.StartInfo.Arguments += " -oi";
-            if (OptimizeNametables)
-                compiler.StartInfo.Arguments += " -on";
-            if (OldHCC)
-                compiler.StartInfo.Arguments += " -old";
-            if (OutputFileinfo)
-                compiler.StartInfo.Arguments += " -fileinfo";
-            if (OutputV6)
-                compiler.StartInfo.Arguments += " -v6";
-            if (OutputV7)
-                compiler.StartInfo.Arguments += " -v7";
-
-            //starts compilation process
-            Console.WriteLine(compiler.StartInfo.Arguments);
-            compiler.Start();
-
-            try
-            {
-                txbCompileOutput.Text = compiler.StandardOutput.ReadToEnd();
-            }
-            catch (System.InvalidOperationException exc)
-            {
-                Console.WriteLine(exc.ToString());
-            }
-            compiler.WaitForExit();
-            Utils.scrollToEnd(txbCompileOutput);
-
-            //Copy output to output folder and open Hexen II if compilation was successful
-            if(compiler.ExitCode == 0 && RunAfterCompile)
-            {
-                string compiledFile, outputFile;
-                compiledFile = Path.GetDirectoryName(ProjectLocation) + "\\progs.dat";
-                outputFile = OutputLocation + "\\progs.dat";
-                try
-                {
-                    File.Copy(compiledFile, outputFile, true);
-                }
-                catch(Exception exc)
-                {
-                    Console.WriteLine(exc.ToString());
-                }
-
-                if(File.Exists(outputFile))
-                {
-                    System.Threading.Thread.Sleep(1000);
-
-                    //Run HEXEN II
-                    Process hexen = new Process();
-                    hexen.StartInfo.FileName = GameLocation;
-                    hexen.StartInfo.WorkingDirectory = Path.GetDirectoryName(GameLocation);
-                    hexen.StartInfo.Arguments = "-game " + Path.GetFileName(OutputLocation) + " ";
-                    hexen.StartInfo.Arguments += RunArguments;
-                    Console.WriteLine(hexen.StartInfo.Arguments);
-                    hexen.Start();
-                }
-            }
+            compile();
         }
 
         private void btnDecompile_Click(object sender, EventArgs e)
         {
             // TODO: Implement this
-            //Decompile code
         }
 
         private void btnGameLoc_Click(object sender, EventArgs e)
@@ -286,6 +186,159 @@ namespace HexCCGUI
             aboutBox.Show();
         }
 
+        private void compilerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmSettings settingsWindow = new frmSettings();
+            settingsWindow.Show();
+        }
+
+        private void btnClearOutput_Click(object sender, EventArgs e)
+        {
+            clearOutput();
+        }
+
+        private void compileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            compile();
+        }
+
+        private void decompileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            decompile();
+        }
+
+        private void txbRunArguments_Leave(object sender, EventArgs e)
+        {
+            RunArguments = txbRunArguments.Text;
+        }
+
+        private void btnOpenTextEditor_Click(object sender, EventArgs e)
+        {
+            Process textEditor = new Process();
+            textEditor.StartInfo.FileName = TextEditorLocation;
+            textEditor.StartInfo.Arguments = Path.GetDirectoryName(ProjectLocation);
+            textEditor.StartInfo.UseShellExecute = false;
+
+            textEditor.Start();
+        }
+
+        private bool checkPathsValidity()
+        {
+            //Checks .src file path
+            if (Utils.checkValidFilePath(txbProjectSrc.Text))
+            {
+                ProjectLocation = txbProjectSrc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbOutputLoc.Text + " is an invalid src file!", "Invalid SRC", MessageBoxButtons.OK);
+                txbProjectSrc.Text = ProjectLocation;
+                return false;
+            }
+
+            //Checks Hexen II engine path
+            if (Utils.checkValidFilePath(txbGameLoc.Text))
+            {
+                GameLocation = txbGameLoc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbGameLoc.Text + " is an invalid Hexen II engine!", "Invalid HexenII Path", MessageBoxButtons.OK);
+                txbGameLoc.Text = GameLocation;
+                return false;
+            }
+
+            return true;
+        }
+
+        #region Action Methods
+        public void compile()
+        {
+            txbCompileOutput.Text = "";
+
+            if(!checkPathsValidity())
+            {
+                return;
+            }
+
+            //Compile code
+            Process compiler = new Process();
+            compiler.StartInfo.FileName = HCCLocation;
+            compiler.StartInfo.UseShellExecute = false;
+            compiler.StartInfo.CreateNoWindow = true;
+            compiler.StartInfo.RedirectStandardOutput = true;
+
+            //sets compiler arguments
+            compiler.StartInfo.Arguments = "-src " + Path.GetDirectoryName(ProjectLocation) + " -name " + Path.GetFileName(ProjectLocation);
+            if (OptimizeImmediates)
+                compiler.StartInfo.Arguments += " -oi";
+            if (OptimizeNametables)
+                compiler.StartInfo.Arguments += " -on";
+            if (OldHCC)
+                compiler.StartInfo.Arguments += " -old";
+            if (OutputFileinfo)
+                compiler.StartInfo.Arguments += " -fileinfo";
+            if (OutputV6)
+                compiler.StartInfo.Arguments += " -v6";
+            if (OutputV7)
+                compiler.StartInfo.Arguments += " -v7";
+
+            //starts compilation process
+            Console.WriteLine(compiler.StartInfo.Arguments);
+            compiler.Start();
+
+            try
+            {
+                txbCompileOutput.Text = compiler.StandardOutput.ReadToEnd();
+            }
+            catch (System.InvalidOperationException exc)
+            {
+                Console.WriteLine(exc.ToString());
+            }
+            compiler.WaitForExit();
+            Utils.scrollToEnd(txbCompileOutput);
+
+            //Copy output to output folder and open Hexen II if compilation was successful
+            if (compiler.ExitCode == 0 && RunAfterCompile)
+            {
+                string compiledFile, outputFile;
+                compiledFile = Path.GetDirectoryName(ProjectLocation) + "\\progs.dat";
+                outputFile = OutputLocation + "\\progs.dat";
+                try
+                {
+                    File.Copy(compiledFile, outputFile, true);
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc.ToString());
+                }
+
+                if (File.Exists(outputFile))
+                {
+                    System.Threading.Thread.Sleep(1000);
+
+                    //Run HEXEN II
+                    Process hexen = new Process();
+                    hexen.StartInfo.FileName = GameLocation;
+                    hexen.StartInfo.WorkingDirectory = Path.GetDirectoryName(GameLocation);
+                    hexen.StartInfo.Arguments = "-game " + Path.GetFileName(OutputLocation) + " ";
+                    hexen.StartInfo.Arguments += RunArguments;
+                    Console.WriteLine(hexen.StartInfo.Arguments);
+                    hexen.Start();
+                }
+            }
+        }
+
+        public void decompile()
+        {
+
+        }
+
+        public void clearOutput()
+        {
+            lblOutput.Text = "";
+        }
+
         private void showDbg()
         {
             string dbgText = "";
@@ -317,88 +370,51 @@ namespace HexCCGUI
             txbCompileOutput.ScrollToCaret();
         }
 
-        private void compilerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        public void loadConfig()
         {
-            frmSettings settingsWindow = new frmSettings();
-            settingsWindow.Show();
-        }
-
-        private void btnClearOutput_Click(object sender, EventArgs e)
-        {
-            txbCompileOutput.Text = "";
-        }
-
-        private void compileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            btnCompile_Click(sender, e);
-        }
-
-        private void decompileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            btnDecompile_Click(sender, e);
-        }
-
-        private void txbRunArguments_Leave(object sender, EventArgs e)
-        {
-            RunArguments = txbRunArguments.Text;
-        }
-
-        private void frmMainWindow_Activated(object sender, EventArgs e)
-        {
+            //load values from config file
+            //string values--
             HCCLocation = Properties.Settings.Default.HCCLocation;
             DCCLocation = Properties.Settings.Default.DCCLocation;
             TextEditorLocation = Properties.Settings.Default.TextEditorLocation;
+
+            txbGameLoc.Text = GameLocation = Properties.Settings.Default.GameLocation;
+            txbProjectSrc.Text = ProjectLocation = Properties.Settings.Default.ProjectLocation;
+            txbOutputLoc.Text = OutputLocation = Properties.Settings.Default.OutputLocation;
+            txbRunArguments.Text = RunArguments = Properties.Settings.Default.RunArguments;
+            //boolean values--
+            chbOI.Checked = OptimizeImmediates = Properties.Settings.Default.OptimizeImmediates;
+            chbON.Checked = OptimizeNametables = Properties.Settings.Default.OptimizeNametables;
+            chbOldHCC.Checked = OldHCC = Properties.Settings.Default.OldHCC;
+            chbFileInfo.Checked = OutputFileinfo = Properties.Settings.Default.OptimizeImmediates;
+            chbV6.Checked = OutputV6 = Properties.Settings.Default.OutputV6;
+            chbV7.Checked = OutputV7 = Properties.Settings.Default.OutputV7;
+
+            chbMaintain.Checked = MaintainOutput = Properties.Settings.Default.MaintainOutput;
+            chbRun.Checked = RunAfterCompile = Properties.Settings.Default.RunAfterCompile;
         }
 
-        private void btnOpenTextEditor_Click(object sender, EventArgs e)
+        public void saveConfig()
         {
-            Process textEditor = new Process();
-            textEditor.StartInfo.FileName = TextEditorLocation;
-            textEditor.StartInfo.Arguments = Path.GetDirectoryName(ProjectLocation);
-            textEditor.StartInfo.UseShellExecute = false;
+            //save values to config file
+            Properties.Settings.Default.GameLocation = GameLocation;
+            Properties.Settings.Default.ProjectLocation = ProjectLocation;
+            Properties.Settings.Default.OutputLocation = OutputLocation;
+            Properties.Settings.Default.RunArguments = RunArguments;
 
-            textEditor.Start();
+            //boolean values--
+            Properties.Settings.Default.OptimizeImmediates = OptimizeImmediates;
+            Properties.Settings.Default.OptimizeNametables = OptimizeNametables;
+            Properties.Settings.Default.OldHCC = OldHCC;
+            Properties.Settings.Default.FileInfo = OutputFileinfo;
+            Properties.Settings.Default.OutputV6 = OutputV6;
+            Properties.Settings.Default.OutputV7 = OutputV7;
 
-            //textEditor.WaitForExit();
+            Properties.Settings.Default.MaintainOutput = MaintainOutput;
+            Properties.Settings.Default.RunAfterCompile = RunAfterCompile;
+
+            Properties.Settings.Default.Save();
         }
-
-        private void txbOutputLoc_Leave(object sender, EventArgs e)
-        {
-            if (Utils.checkValidDirectoryPath(txbOutputLoc.Text))
-            {
-                OutputLocation = txbOutputLoc.Text;
-            }
-            else
-            {
-                MessageBox.Show(txbOutputLoc.Text + " is an invalid location!", "Invalid Path", MessageBoxButtons.OK);
-                txbOutputLoc.Text = OutputLocation;
-            }
-        }
-
-        private void txbProjectSrc_Leave(object sender, EventArgs e)
-        {
-            if (Utils.checkValidFilePath(txbProjectSrc.Text))
-            {
-                ProjectLocation = txbProjectSrc.Text;
-            }
-            else
-            {
-                MessageBox.Show(txbOutputLoc.Text + " is an invalid src file!", "Invalid SRC", MessageBoxButtons.OK);
-                txbProjectSrc.Text = ProjectLocation;
-            }
-        }
-
-        private void txbGameLoc_Leave(object sender, EventArgs e)
-        {
-            if (Utils.checkValidFilePath(txbGameLoc.Text))
-            {
-                GameLocation = txbGameLoc.Text;
-            }
-            else
-            {
-                MessageBox.Show(txbGameLoc.Text + " is an invalid Hexen II engine!", "Invalid HexenII Path", MessageBoxButtons.OK);
-                txbGameLoc.Text = GameLocation;
-            }
-        }
+        #endregion
     }
 }

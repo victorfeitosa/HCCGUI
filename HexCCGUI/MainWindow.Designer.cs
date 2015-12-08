@@ -341,7 +341,6 @@
             this.txbRunArguments.Name = "txbRunArguments";
             this.txbRunArguments.Size = new System.Drawing.Size(248, 20);
             this.txbRunArguments.TabIndex = 14;
-            this.txbRunArguments.TextChanged += new System.EventHandler(this.txbRunArguments_Leave);
             this.txbRunArguments.Leave += new System.EventHandler(this.txbRunArguments_Leave);
             // 
             // lblRunArguments
@@ -359,8 +358,6 @@
             this.txbGameLoc.Name = "txbGameLoc";
             this.txbGameLoc.Size = new System.Drawing.Size(209, 20);
             this.txbGameLoc.TabIndex = 12;
-            this.txbGameLoc.TextChanged += new System.EventHandler(this.txbGameLoc_Leave);
-            this.txbGameLoc.Leave += new System.EventHandler(this.txbGameLoc_Leave);
             // 
             // lblGameLoc
             // 
@@ -444,8 +441,6 @@
             this.txbProjectSrc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txbProjectSrc.Size = new System.Drawing.Size(209, 20);
             this.txbProjectSrc.TabIndex = 22;
-            this.txbProjectSrc.TextChanged += new System.EventHandler(this.txbProjectSrc_Leave);
-            this.txbProjectSrc.Leave += new System.EventHandler(this.txbProjectSrc_Leave);
             // 
             // txbOutputLoc
             // 
@@ -455,7 +450,6 @@
             this.txbOutputLoc.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txbOutputLoc.Size = new System.Drawing.Size(209, 20);
             this.txbOutputLoc.TabIndex = 24;
-            this.txbOutputLoc.TextChanged += new System.EventHandler(this.txbOutputLoc_Leave);
             // 
             // lblProjectSrc
             // 

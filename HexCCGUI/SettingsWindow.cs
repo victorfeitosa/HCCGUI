@@ -30,6 +30,43 @@ namespace HexCCGUI
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            //validate paths
+            if (Utils.checkValidFilePath(txbHCCLoc.Text))
+            {
+                DCCLocation = txbHCCLoc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbHCCLoc.Text + " is an invalid HCC executable!", "Invalid HCC", MessageBoxButtons.OK);
+                txbHCCLoc.Text = DCCLocation;
+
+                return;
+            }
+
+            if (txbDCCLoc.Text == "" || Utils.checkValidFilePath(txbDCCLoc.Text))
+            {
+                DCCLocation = txbDCCLoc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbDCCLoc.Text + " is an invalid DCC executable!", "Invalid DCC", MessageBoxButtons.OK);
+                txbDCCLoc.Text = DCCLocation;
+
+                return;
+            }
+
+            if (txbTextEditorLoc.Text == "" || Utils.checkValidFilePath(txbTextEditorLoc.Text))
+            {
+                TextEditorLocation = txbTextEditorLoc.Text;
+            }
+            else
+            {
+                MessageBox.Show(txbTextEditorLoc.Text + " is an invalid executable!", "Invalid Executable", MessageBoxButtons.OK);
+                txbTextEditorLoc.Text = TextEditorLocation;
+
+                return;
+            }
+
             //save settings
             Properties.Settings.Default.HCCLocation = HCCLocation;
             Properties.Settings.Default.DCCLocation = DCCLocation;
@@ -108,45 +145,6 @@ namespace HexCCGUI
             }
 
             Utils.scrollToEnd(txbTextEditorLoc);
-        }
-
-        private void txbHCCLoc_Leave(object sender, EventArgs e)
-        {
-            if (Utils.checkValidFilePath(txbHCCLoc.Text))
-            {
-                HCCLocation = txbHCCLoc.Text;
-            }
-            else
-            {
-                MessageBox.Show(txbHCCLoc.Text + " is an invalid HCC executable!", "Invalid HCC", MessageBoxButtons.OK);
-                txbHCCLoc.Text = HCCLocation;
-            }
-        }
-
-        private void txbDCCLoc_Leave(object sender, EventArgs e)
-        {
-            if (Utils.checkValidFilePath(txbDCCLoc.Text))
-            {
-                DCCLocation = txbDCCLoc.Text;
-            }
-            else
-            {
-                MessageBox.Show(txbDCCLoc.Text + " is an invalid DCC executable!", "Invalid DCC", MessageBoxButtons.OK);
-                txbDCCLoc.Text = DCCLocation;
-            }
-        }
-
-        private void txbTextEditorLoc_Leave(object sender, EventArgs e)
-        {
-            if (Utils.checkValidFilePath(txbTextEditorLoc.Text))
-            {
-                TextEditorLocation = txbTextEditorLoc.Text;
-            }
-            else
-            {
-                MessageBox.Show(txbTextEditorLoc.Text + " is an invalid executable!", "Invalid Executable", MessageBoxButtons.OK);
-                txbTextEditorLoc.Text = TextEditorLocation;
-            }
         }
     }
 }

@@ -1,1 +1,15 @@
 C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Release\HexCCGUI.exe.config
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Release\HexCCGUI.exe.manifest
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Release\HexCCGUI.application
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Release\HexCCGUI.exe
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\bin\Release\HexCCGUI.pdb
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.frmAbout.resources
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.frmMainWindow.resources
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.Properties.Resources.resources
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.frmSettings.resources
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.csproj.GenerateResource.Cache
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.exe.manifest
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.application
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.exe
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.pdb
+C:\Dev\Workspaces\GitHub\HCCGUI\HexCCGUI\obj\Release\HexCCGUI.csprojResolveAssemblyReference.cache
