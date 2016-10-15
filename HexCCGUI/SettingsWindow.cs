@@ -30,6 +30,12 @@ namespace HexCCGUI
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if(txbHCCLoc.Text == "")
+            {
+                Close();
+                return;
+            }
+
             //validate paths
             if (Utils.checkValidFilePath(txbHCCLoc.Text))
             {
@@ -75,13 +81,12 @@ namespace HexCCGUI
             Properties.Settings.Default.Save();
 
             //closes window
-            this.Close();
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            //closes window
-            this.Close();
+            Close();
         }
 
         private void btnHCCLoc_Click(object sender, EventArgs e)
